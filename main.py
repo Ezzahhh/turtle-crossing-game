@@ -18,8 +18,20 @@ is_gaming_running = True
 screen.listen()
 screen.onkeypress(key="Up", fun=player.move_forward)
 while is_gaming_running:
-    sleep(0.1)
+    sleep(car_manager.car_speed)
     screen.update()
+    for car in car_manager.car_list:
+        if player.distance(car) < 20:
+            # collision and then reset level, score and clear screen
+            car_manager.reset_level()
+            scoreboard.reset_score()
+            player.reset_to_home()
+    if player.ycor() > 200:
+        # Player has passed to next level
+        player.reset_to_home()
+        car_manager.reset_level()
+        scoreboard.add_score()
+        car_manager.faster_speed()
     car_manager.add_cars()
     car_manager.move_cars()
 

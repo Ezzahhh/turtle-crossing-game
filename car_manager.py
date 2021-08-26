@@ -4,6 +4,7 @@ from random import choice, randint
 COLORS = ["red", "orange", "yellow", "green", "blue", "purple"]
 STARTING_MOVE_DISTANCE = 5
 MOVE_INCREMENT = 10
+UPDATE_SPEED = 0.1
 
 
 class Car_Manager(Turtle):
@@ -12,6 +13,7 @@ class Car_Manager(Turtle):
         self.penup()
         self.hideturtle()
         self.car_list = []
+        self.car_speed = UPDATE_SPEED
 
     def add_cars(self):
         if randint(0, 100) < 25:
@@ -25,6 +27,15 @@ class Car_Manager(Turtle):
                 self.car_list.remove(car)
             else:
                 car.forward(MOVE_INCREMENT)
+
+    def reset_level(self):
+        for car in self.car_list:
+            car.clear()
+            car.ht()
+            self.car_list.remove(car)
+
+    def faster_speed(self):
+        self.car_speed *= 0.8
 
 
 class Car(Turtle):
